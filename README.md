@@ -38,11 +38,14 @@ npm install
 ```
 
 
-Comando | Descrição
-npm run dev | Inicia Next.js em modo de desenvolvimento + SCSS
-npm run build | Compila o projeto Next.js e o SCSS
-npm run scss:watch | Observa alterações nos arquivos SCSS
-npm run scss:build | Compila manualmente os arquivos SCSS
+## 🚀 Scripts Disponíveis
+
+| Comando              | Descrição                                           |
+|----------------------|----------------------------------------------------|
+| `npm run dev`        | Inicia o Next.js em modo de desenvolvimento + SCSS |
+| `npm run build`      | Compila o projeto Next.js e o SCSS                 |
+| `npm run scss:watch` | Observa alterações nos arquivos SCSS               |
+| `npm run scss:build` | Compila manualmente os arquivos SCSS               |
 
 
 
