@@ -1,66 +1,109 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-
 
 type FullBannerProps = {
   dataType: "image" | "video";
   dataGroup: number;
   className?: string;
+  dataDevice: string;
 };
 
-export default function FullBanner({ dataType, dataGroup, className}: FullBannerProps) {
+type Banner = {
+  title: string;
+  src: string;
+  href?: string;
+  linkTitle?: string;
+  description?: React.ReactNode;
+  group: number;
+  type: "image" | "video";
+  width: number;
+  height: number;
+  device: "desktop" | "mobile";
+};
 
-
-
-  type Banners = {
-    title: string;
-    src: string;
-    href: string;
-    linkTitle?: string;
-    description?: React.ReactNode;
-    group: number;
-    type: string;
-    width: number;
-    height: number;
-
-  };
-
-
-  const banners: Banners[] = [
-    { title: "banner image 1", src: "/main_banner.webp", href: "", group: 1000, type: "image", width: 1920, height: 1080, description: <h1>Lorem ipsum dolor sit amer</h1>, linkTitle: "Lorem Ipsun dolor" },
-    { title: "video banner", src: "/video-banner.mp4", href: "", group: 3000, type: "video", width: 1920, height: 1080 },
+export default function FullBanner({
+  dataType,
+  dataGroup,
+  dataDevice,
+  className,
+}: FullBannerProps) {
+  const banners: Banner[] = [
+    {
+      title: "banner image 1",
+      src: "/main_banner.webp",
+      href: "/foo",
+      group: 1000,
+      type: "image",
+      width: 1920,
+      height: 1080,
+      description: <h1>Lorem ipsum dolor sit amer</h1>,
+      linkTitle: "Lorem Ipsun dolor",
+      device: "desktop",
+    },
+    {
+      title: "banner image mobile",
+      src: "/main_banner_mobile.webp",
+      href: "/foo",
+      group: 1000,
+      type: "image",
+      width: 768,
+      height: 1024,
+      description: <h1>Lorem ipsum dolor sit amer</h1>,
+      linkTitle: "Lorem Ipsun dolor",
+      device: "mobile",
+    },
+    {
+      title: "video banner",
+      src: "/video-banner.mp4",
+      group: 3000,
+      type: "video",
+      width: 1920,
+      height: 1080,
+      device: "desktop",
+    },
+    {
+      title: "video banner mobile",
+      src: "/video-banner-mobile.mp4",
+      group: 3000,
+      type: "video",
+      width: 768,
+      height: 1024,
+      device: "mobile",
+    },
   ];
 
-
-
-  const filteredBanners = banners.filter(
-    (item) => item.group === dataGroup && item.type === dataType
+  const filtered = banners.filter(
+    (b) =>
+      b.group === dataGroup &&
+      b.type === dataType &&
+      b.device === dataDevice
   );
 
   return (
     <div className={className}>
-      {dataType === "image" ? (
-
-        <div>
-          {filteredBanners.map((item) => (
-
+      {dataType === "image"
+        ? filtered.map((item) => (
             <div key={item.title} className="banner-container">
-              <Image src={item.src} width={item.width} height={item.height} alt={item.title}></Image>
-              <div className="description-container">
-                {item.description}
-                <Link href={item.href} title={item.linkTitle} >{item.linkTitle}</Link>
-              </div>
-              
+              <Image
+                src={item.src}
+                width={item.width}
+                height={item.height}
+                alt={item.title}
+              />
+              {item.description && (
+                <div className="description-container">
+                  {item.description}
+                  {item.linkTitle && item.href && (
+                    <Link href={item.href} title={item.linkTitle}>
+                      {item.linkTitle}
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
-           
-
-          ))}
-        </div>
-
-      ) : (
-        <div>
-          {filteredBanners.map((item) => (
+          ))
+        : filtered.map((item) => (
             <video
               key={item.title}
               autoPlay
@@ -72,8 +115,6 @@ export default function FullBanner({ dataType, dataGroup, className}: FullBanner
               Seu navegador não suporta vídeo HTML5.
             </video>
           ))}
-        </div>
-      )}
     </div>
   );
 }
