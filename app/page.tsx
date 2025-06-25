@@ -3,26 +3,13 @@ import Header from "@/components/common/header";
 import FullBanner from "@/components/banners/full-banner";
 import CentralBanner from "@/components/banners/central-banner";
 import Footer from "@/components/common/footer";
-import { useEffect, useState } from "react";
-
+import { useDevice } from "@/hooks/useDevice";
 
 export default function Home() {
    
-    const [device, setDevice] = useState<"mobile" | "desktop" | "">("");
+    const device = useDevice();
 
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        if (window.innerWidth < 768) {
-          setDevice("mobile");
-        } else {
-          setDevice("desktop");
-        }
-      }
-    }, []);
-
-    if (!device) {
-      return null; 
-    }
+    if (!device) return null;
 
   
   return (
